@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+
+* {
+    font-family: "Josefin Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+body {
+    background: linear-gradient(140deg, rgba(2,0,36,1) 0%, rgba(191,231,233,1) 0%, rgba(241,245,205,1) 37%, rgba(255,244,150,1) 68%, rgba(207,190,133,1) 100%, rgba(9,9,121,1) 100%);
+    background-color: #f0f0f0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: center;
+    height: 100vh;
+    overflow: scroll;
+    padding: 25px;
+    color: #212b36;
+}
+
+
+h1, h2 {
+    font-size: 24px;
+    text-align: center;
+}
+
+@media screen and (min-width: 1000px) {
+    .wrapper {
+        max-width: none;
+    }
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 20px;
+    max-width: 450px;
+    width: 100%;
+    text-align: left;
+    margin-top: 20px;
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+input[type="number"]::-webkit-inner-spin-button, 
+input[type="number"]::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0; 
+}
+
+form {
+    -webkit-padding-after: 0;
+    -webkit-padding-before: 0;
+    -webkit-padding-start: 0;
+    -webkit-padding-end: 0;
+    margin: 0;
+    padding: 10px;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+    margin: 0;
+    font-size: 18px;
+    text-align: center;
+    border: none;
+    overflow: hidden;
+    flex-grow: 1;
+}
+
+.input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
+    padding: 3px 10px 0 10px;
+    font-size: 18px;
+    text-align: center;
+    width: 300px;
+    height: 30px;
+    border: #212b36 solid 1px;
+    border-radius: 8px;
+    border-color: #ccc;
+    background-color: #fff;
+    overflow: hidden;
+}
+
+input[type="number"]::after {
+    content: '€';
+}
+
+.resultat {
+    display: flex;
+    text-align: justify;
+    width: 300px;
+    margin: 10px 0;
+}
+
+.resultat span {
+    display: inline-flex;
+    padding: 0 5px;
+    justify-content: right;
+    flex-grow: 1;
+    height: inherit;
+}

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HTML 5 Boilerplate</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="wrapper">
+        <div class="container">
+            <h1>Simulateur de pension de retraite</h1>
+            <form action="javascript:void(0);">
+                <label for="pension">Votre pension mensuelle brute:</label><br>
+                <div class="input"><input type="number" id="pension" name="pension">€</div><br>
+            </form onsubmit="updateResults"> 
+            <div>Avec une majorité de députés Nouveau Front Populaire</div>
+            <div class="resultat"><span id="win_lose"></span></div>
+            <div class="resultat">Vous receviez <span id="pensionNet1">0</span>€</div>
+            <div class="resultat">Vous recevrez <span id="pensionNet2">0</span>€</div>
+            <div class="resultat">La différence (annuelle) : <span id="difference" class="alert">0</span>€</div>
+            <script src="index.js"></script>
+        </div>
+    </div>
+  </body>
+</html>
