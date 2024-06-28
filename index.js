@@ -4,15 +4,11 @@
   updateResults();
 
   function updateResults() {
-    const pension = parseFloat(document.getElementById("pension").value);
-
-    const item = getCSGRate2(pension);
+    let pension = parseFloat(document.getElementById("pension").value);
     
     if (!isNaN(pension) || pension === 0) {
-      const pension = parseFloat(document.getElementById("pension").value);
-
       const pensionNet1 = pension * (1 - getCSGRate1(pension) * 0.985);
-      const pensionNet2 = pension * (1 - getCSGRate2(pension) * 0.985);
+      const pensionNet2 = ((pension < 1649)? 1649: pension) * (1 - getCSGRate2_5(pension) * 0.985);
 
       const difference = (pensionNet2 - pensionNet1) * 12;
 
@@ -33,10 +29,6 @@
   }
 
   function getCSGRate1(pension) {
-    // if (pension <= 1386) return 0;
-    // if (pension <= 1607) return 0.038;
-    // if (pension <= 2424) return 0.066;
-    // return 0.083;
     pension = pension * 12;
     
     if (pension <= 12230) return 0;
@@ -46,49 +38,69 @@
   }
 
   function getCSGRate2(pension) {
-    // if (pension <= 409) return 0;
-    // if (pension <= 1110) return 0.038;
-    // if (pension <= 1607) return 0.055;
-    // if (pension <= 2485) return 0.075;
-    // if (pension <= 4985) return 0.092;
-    // if (pension <= 6651) return 0.112;
-    // return 0.132;
     pension = pension * 12;
-    var impot = 0;
-    //« 1° 0 % pour les revenus bruts annuels inférieurs à 4 907 € ;
-    if (pension > 4907) {
-      impot += 0;
-        //« 2° 3,8 % pour les revenus bruts annuels compris entre 4 907 € et 13 324 € ;
-    } else {
-        if (pension > 13324) {
-          impot += ((13324 - 4907) * 0.038);
-            //« 3° 5,5 % pour les revenus bruts annuels compris entre 13 324 € et 19 287 € ;
-            if (pension > 19287) {
-              impot += ((19287 - 13324) * 0.055);
-                // « 4° 7,5 % pour les revenus bruts annuels compris entre 19 287 € et 29 817 € ;
-                if (pension > 29817) {
-                  impot += ((29817 - 19287) * 0.075);
-                  // « 5° 9,2 % pour les revenus bruts annuels supérieurs à 29 817 € ;
-                  impot += (pension - 29817) * 0.092;
-                  // « 6° 11,2 % pour les revenus bruts annuels supérieurs à 59 817 € ; »
-                  if (pension > 59817) {
-                      impot += (pension - 59817) * 0.112;
-                  }
-                  //« 7° 13,2 % pour les revenus bruts annuels supérieurs à 79 817 € ; »
-                  if (pension > 79817) {
-                    impot += (pension - 79817) * 0.132;
-                  }
-                }  else {
-                  impot += ((pension - 19287) * 0.075);
-                }
-            }  else {
-              impot += ((pension - 13324) * 0.055);
-            }
-        }  else {
-          impot += ((pension - 4907) * 0.038);
-        }
-    } 
+    let impot = 0;
+    let tmpPension = pension;
+    let i = 0;
+
+    let bareme = [
+      [0, 0],
+      [4907, 0.038],
+      [13324, 0.055],
+      [19287, 0.075],
+      [29817, 0.092],
+      [59817, 0.112],
+      [79817, 0.132],
+    ];
+
+    while(tmpPension > .99 && i < bareme.length)
+    {
+      if (i < bareme.length - 1)
+      {
+        impot += Math.min(tmpPension, bareme[i+1][0]) * bareme[i][1];
+        tmpPension -= Math.min(tmpPension, bareme[i+1][0]);
+      }
+      else
+      {
+        impot += tmpPension * bareme[i][1];
+      }
+
+      i++;
+    }
+
     return impot/pension;
+  }
+
+  function getCSGRate2_5(pension) {
+    let pensionAnnuelle = pension * 12;
+    let impot = 0;
+    let tmpPensionAnnuelle = pensionAnnuelle;
+    let i = 0;
+  
+    let bareme = [
+      [0, 0.030],
+      [19788, 0.075],
+      [29817, 0.092],
+      [59817, 0.112],
+      [79817, 0.132],
+    ];
+
+    while(tmpPensionAnnuelle > .99 && i < bareme.length)
+    {
+      if (i < bareme.length - 1)
+      {
+        impot += Math.min(tmpPensionAnnuelle, bareme[i+1][0]) * bareme[i][1];
+        tmpPensionAnnuelle -= Math.min(tmpPensionAnnuelle, bareme[i+1][0]);
+      }
+      else
+      {
+        impot += tmpPensionAnnuelle * bareme[i][1];
+      }
+
+      i++;
+    }
+
+    return impot / pensionAnnuelle;
   }
 
   function calculatePensionAfterCSG(pension, csgRate) {
